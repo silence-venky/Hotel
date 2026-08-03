@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARIGOLD - Luxury Hotel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       COLOR PALETTE & VARIABLES
+       ========================================================================== */
+    :root {
+      --primary-gold: #f5b82e;
+      --gold-hover: #e0a520;
+      --dark-footer: #464646;
+      --text-dark: #333333;
+      --text-muted: #666666;
+      --bg-light: #ffffff;
+      --border-color: #e0e0e0;
+      --font-main: 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Buttons */
+    .btn-gold-fill {
+      display: inline-block;
+      background-color: var(--primary-gold);
+      color: #333333;
+      padding: 14px 42px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      border: none;
+      text-align: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-gold-fill:hover {
+      background-color: var(--gold-hover);
+    }
+
+    .btn-book-outline {
+      display: inline-block;
+      border: 1px solid var(--primary-gold);
+      color: var(--primary-gold);
+      padding: 10px 26px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn-book-outline:hover {
+      background-color: var(--primary-gold);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background-color: var(--bg-light);
+      z-index: 1000;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 46px 24px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 9px;
+      color: var(--primary-gold);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    /* Desktop Navigation */
+    .desktop-menu {
+      display: flex;
+      align-items: center;
+      gap: 38px;
+    }
+
+    /* Unfixed Hover Underline */
+    .desktop-menu a {
+      position: relative;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      font-weight: 400;
+      padding-bottom: 6px;
+      transition: color 0.3s ease;
+    }
+
+    .desktop-menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2.5px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--primary-gold);
+      transition: width 0.3s ease-in-out;
+    }
+
+    .desktop-menu a:hover::after {
+      width: 100%;
+    }
+
+    .desktop-menu a:hover {
+      color: var(--text-dark);
+    }
+
+    .desktop-menu a.btn-book-outline::after {
+      display: none;
+    }
+
+    /* Mobile Menu Toggle Checkbox */
+    #menu-toggle {
+      display: none;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger .bar {
+      height: 2px;
+      width: 100%;
+      background-color: var(--primary-gold);
+      border-radius: 2px;
+    }
+
+    /* Mobile Overlay */
+    .mobile-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--dark-footer);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 42px;
+      color: #ffffff;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .mobile-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .mobile-menu a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 22px;
+      letter-spacing: 3px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    #menu-toggle:checked ~ .mobile-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      padding: 85px 0 60px;
+      text-align: center;
+      background-color: var(--bg-light);
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 70px;
+      font-weight: 300;
+      color: var(--primary-gold);
+      margin-bottom: 30px;
+      letter-spacing: 3.5px;
+    }
+
+    .section-desc {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.85;
+    }
+
+    /* ==========================================================================
+       ROOM CARDS SECTION
+       ========================================================================== */
+    .rooms-carousel-section {
+      padding: 25px 0 120px;
+    }
+
+    .room-card {
+      position: relative;
+      margin-bottom: 110px;
+    }
+
+    .room-image-container {
+      position: relative;
+      width: 100%;
+      height: 630px;
+      overflow: hidden;
+    }
+
+    .room-image-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .room-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .carousel-arrow.prev { left: 30px; }
+    .carousel-arrow.next { right: 30px; }
+
+    .fullscreen-icon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: #ffffff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* OVERLAY CARD STRUCTURE (Updated based on image) */
+    .room-details {
+      position: relative;
+      width: 78%;
+      margin: -130px auto 0;
+      background-color: #ffffff;
+      padding: 60px 70px;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.06);
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .left-col h2 {
+      font-size: 36px;
+      font-weight: 500;
+      color: #444444;
+      margin-bottom: 24px;
+    }
+
+    .left-col .room-intro {
+      font-size: 15px;
+      color: #555555;
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 50px;
+      max-width: 320px;
+    }
+
+    /* Double Border Box for Room Size (Top & Bottom Lines) */
+    .room-size-wrapper {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 310px;
+      padding: 10px 0;
+      border-top: 1px solid var(--primary-gold);
+      border-bottom: 1px solid var(--primary-gold);
+    }
+
+    .room-size {
+      font-size: 14px;
+      color: #888888;
+      letter-spacing: 2px;
+      font-weight: 300;
+    }
+
+    .right-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    /* List Layout matching image */
+    .amenities-list {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 45px;
+    }
+
+    .amenities-list li {
+      font-size: 15px;
+      color: #555555;
+      font-weight: 300;
+      line-height: 2.2;
+      letter-spacing: 0.5px;
+    }
+
+    .right-col .action-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: auto;
+    }
+
+    /* ==========================================================================
+       FOOTER SECTION
+       ========================================================================== */
+    .site-footer {
+      background-color: var(--dark-footer);
+      color: #ffffff;
+      padding: 85px 0 32px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 24px;
+      letter-spacing: 10px;
+      color: var(--primary-gold);
+      margin-bottom: 36px;
+    }
+
+    .footer-address {
+      font-size: 15px;
+      font-weight: 300;
+      color: #d8d8d8;
+      margin-bottom: 36px;
+      line-height: 1.85;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 36px;
+    }
+
+    .social-icons a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .contact-info {
+      margin-bottom: 48px;
+      font-size: 16px;
+      font-weight: 300;
+      color: #e0e0e0;
+    }
+
+    .contact-info .phone {
+      margin-bottom: 10px;
+    }
+
+    .footer-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      margin-bottom: 72px;
+    }
+
+    .cta-text {
+      font-size: 15px;
+      color: #cccccc;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 30px;
+      font-size: 13px;
+      color: var(--primary-gold);
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES
+       ========================================================================== */
+    @media screen and (max-width: 1100px) {
+      .room-details {
+        width: 88%;
+        padding: 45px;
+      }
+    }
+
+    @media screen and (max-width: 1024px) {
+      .room-image-container {
+        height: 500px;
+      }
+
+      .room-details {
+        width: 90%;
+        margin-top: -90px;
+        padding: 42px;
+        gap: 30px;
+      }
+
+      .section-title {
+        font-size: 54px;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+      .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 25px 13px;
+      }
+      .logo {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      color: var(--primary-gold);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-section {
+        padding: 48px 0 24px;
+      }
+
+      .section-title {
+        font-size: 44px;
+      }
+
+      .section-desc {
+        font-size: 15px;
+        padding: 0 10px;
+      }
+
+      .room-image-container {
+        height: 380px;
+      }
+
+      .room-details {
+        grid-template-columns: 1fr;
+        width: 94%;
+        margin: -45px auto 0;
+        padding: 30px 24px;
+        gap: 24px;
+      }
+
+      .left-col h2 {
+        font-size: 28px;
+      }
+
+      .right-col .action-row {
+        justify-content: flex-start;
+      }
+
+      .right-col .btn-gold-fill {
+        width: 100%;
+      }
+
+      .footer-cta-row {
+        flex-direction: column;
+        gap: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu toggle checkbox -->
+  <input type="checkbox" id="menu-toggle">
+
+  <!-- ================= HEADER ================= -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">M A R I G O L D</a>
+      
+      <!-- Desktop Menu -->
+      <nav class="desktop-menu">
+        <a href="#rooms">Rooms</a>
+        <a href="#dining">Dining</a>
+        <a href="#wellness">Wellness</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <a href="#book" class="btn-book-outline">BOOK</a>
+      </nav>
+
+      <!-- Hamburger Trigger -->
+      <label for="menu-toggle" class="hamburger" aria-label="Toggle Navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </label>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay">
+      <label for="menu-toggle" class="close-btn">&times;</label>
+      <nav class="mobile-menu">
+        <a href="#rooms">ROOMS</a>
+        <a href="#dining">DINING</a>
+        <a href="#wellness">WELLNESS</a>
+        <a href="#events">EVENTS</a>
+        <a href="#contact">CONTACT</a>
+        <a href="#book" class="btn-gold-fill">BOOK</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero-section" id="rooms">
+    <div class="container">
+      <span class="section-subtitle">R O O M S</span>
+      <h1 class="section-title">Reset</h1>
+      <p class="section-desc">
+        Connecting with yourself need not mean disconnecting from the world. 
+        Rooms at Marigold are designed to let you decide.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= ROOM CARDS SECTION ================= -->
+  <section class="rooms-carousel-section">
+    <div class="container">
+
+      <!-- Silver Room -->
+      <div class="room-card">
+        <div class="room-image-container">
+            <video autoplay muted loop playsinline>
+                <source src="room 1.mp4" type="video/mp4">
+            </video>
+          <span class="carousel-arrow prev">&lt;</span>
+          <span class="carousel-arrow next">&gt;</span>
+          <span class="fullscreen-icon">&#x26F6;</span>
+        </div>
+        <div class="room-details">
+          <div class="left-col">
+            <h2>Silver</h2>
+            <p class="room-intro">When balance is what you seek, there's nothing quite like finding it effortlessly.</p>
+            <div class="room-size-wrapper">
+              <span class="room-size">315 sft.</span>
+            </div>
+          </div>
+          <div class="right-col">
+            <ul class="amenities-list">
+              <li>• E-safe • Minibar • 50" Smart TV</li>
+              <li>• WiFi • Iron Box & Board</li>
+              <li>• Toiletries • Tea & Coffee Maker</li>
+            </ul>
+            <div class="action-row">
+              <a href="#" class="btn-gold-fill">BOOK NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gold Room -->
+      <div class="room-card">
+        <div class="room-image-container">
+            <video autoplay muted loop playsinline>
+                <source src="room 2.mp4" type="video/mp4">
+            </video>
+          <span class="carousel-arrow prev">&lt;</span>
+          <span class="carousel-arrow next">&gt;</span>
+          <span class="fullscreen-icon">&#x26F6;</span>
+        </div>
+        <div class="room-details">
+          <div class="left-col">
+            <h2>Gold</h2>
+            <p class="room-intro">More room to dial down the urban chaos while staying connected with what matters to you.</p>
+            <div class="room-size-wrapper">
+              <span class="room-size">315 sft.</span>
+            </div>
+          </div>
+          <div class="right-col">
+            <ul class="amenities-list">
+              <li>• E-safe • Minibar • 50" Smart TV</li>
+              <li>• WiFi • Tea & Coffee Maker</li>
+              <li>• Cocktail Hours</li>
+            </ul>
+            <div class="action-row">
+              <a href="#" class="btn-gold-fill">BOOK NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Platinum Room -->
+      <div class="room-card">
+        <div class="room-image-container">
+            <video autoplay muted loop playsinline>
+                <source src="room 3.mp4" type="video/mp4">
+            </video>
+          <span class="carousel-arrow prev">&lt;</span>
+          <span class="carousel-arrow next">&gt;</span>
+          <span class="fullscreen-icon">&#x26F6;</span>
+        </div>
+        <div class="room-details">
+          <div class="left-col">
+            <h2>Platinum</h2>
+            <p class="room-intro">When you get comfort and indulgence just right, the world seems to fade away.</p>
+            <div class="room-size-wrapper">
+              <span class="room-size">315 sft.</span>
+            </div>
+          </div>
+          <div class="right-col">
+            <ul class="amenities-list">
+              <li>• E-safe • Minibar • 50" Smart TV • WiFi</li>
+              <li>• Tea & Coffee Maker • Lounge Access</li>
+              <li>• Exclusive Pricing on F&B • Complimentary Laundry</li>
+            </ul>
+            <div class="action-row">
+              <a href="#" class="btn-gold-fill">BOOK NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signature S Room -->
+      <div class="room-card">
+        <div class="room-image-container">
+            <video autoplay muted loop playsinline>
+                <source src="room 4.mp4" type="video/mp4">
+            </video>
+          <span class="carousel-arrow prev">&lt;</span>
+          <span class="carousel-arrow next">&gt;</span>
+          <span class="fullscreen-icon">&#x26F6;</span>
+        </div>
+        <div class="room-details">
+          <div class="left-col">
+            <h2>Signature S</h2>
+            <p class="room-intro">Utility, comfort and decadence in equal parts, there's room for everything but stress here.</p>
+            <div class="room-size-wrapper">
+              <span class="room-size">399 sft.</span>
+            </div>
+          </div>
+          <div class="right-col">
+            <ul class="amenities-list">
+              <li>• Living Room & Bedroom • 50" Smart TV</li>
+              <li>• E-safe • Mini Refrigerator • WiFi</li>
+              <li>• Tea & Coffee Maker • Cocktail Hours</li>
+            </ul>
+            <div class="action-row">
+              <a href="#" class="btn-gold-fill">BOOK NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marigold Suite -->
+      <div class="room-card">
+        <div class="room-image-container">
+            
+                <img source src="room 5.webp" >
+            
+          <span class="carousel-arrow prev">&lt;</span>
+          <span class="carousel-arrow next">&gt;</span>
+          <span class="fullscreen-icon">&#x26F6;</span>
+        </div>
+        <div class="room-details">
+          <div class="left-col">
+            <h2>Marigold Suite</h2>
+            <p class="room-intro">Combines all the elements you need for a truly indulgent getaway.</p>
+            <div class="room-size-wrapper">
+              <span class="room-size">818 sft.</span>
+            </div>
+          </div>
+          <div class="right-col">
+            <ul class="amenities-list">
+              <li>• Living Room, Washrooms & Bedrooms • 50" Smart TVs</li>
+              <li>• E-safe • Mini Refrigerator • WiFi • Working Space</li>
+              <li>• Tea & Coffee Maker • Boardroom Access • Cocktail Hours</li>
+            </ul>
+            <div class="action-row">
+              <a href="#" class="btn-gold-fill">BOOK NOW</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-logo">M A R I G O L D</div>
+      
+      <p class="footer-address">
+        7-1-25, Ameerpet Road, Leelanagar,<br>
+        Begumpet, Hyderabad, Telangana - 500016
+      </p>
+
+      <div class="social-icons">
+        <a href="#">f</a>
+        <a href="#">📷</a>
+      </div>
+
+      <div class="contact-info">
+        <p class="phone">+91 40 6736 3636</p>
+        <p class="email">reservations.hyd@marigoldhotels.com</p>
+      </div>
+
+      <div class="footer-cta-row">
+        <span class="cta-text">For more information</span>
+        <a href="#contact" class="btn-gold-fill">CONTACT US</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Marigold Hotels. All Rights Reserved</p>
+    </div>
+  </footer>
+
+</body>
+</html>
