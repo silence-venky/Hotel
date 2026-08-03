@@ -14,20 +14,19 @@
   <header class="navbar">
     <div class="navbar-container">
       <a href="#" class="logo">M A R I G O L D</a>
+      <nav class="nav-links">
+        <a href="#rooms">ROOMS</a>
+        <a href="#dining">DINING</a>
+        <a href="#wellness">WELLNESS</a>
+        <a href="#events">EVENTS</a>
+        <a href="#contact">CONTACT</a>
+        <a href="#book" class="btn-book">BOOK</a>
+      </nav>
       <button class="hamburger-menu" aria-label="Toggle navigation">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <nav class="nav-links">
-        <a href="#rooms">Rooms</a>
-        <a href="#dining">Dining</a>
-        <a href="#wellness">Wellness</a>
-        <a href="#events">Events</a>
-        <a href="#contact">Contact</a>
-        <a href="#book" class="btn-book">BOOK</a>
-      </nav>
-      
     </div>
   </header>
 
@@ -226,6 +225,24 @@
       <p>&copy; 2026 Marigold Hotels. All Rights Reserved</p>
     </div>
   </footer>
+
+  <!-- Hamburger Navigation Script -->
+  <script>
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+  </script>
 
 </body>
 </html>
