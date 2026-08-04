@@ -10,7 +10,7 @@
   
   <style>
     /* ==========================================================================
-       COLOR PALETTE & VARIABLES
+       COLOR PALETTE & GLOBAL RESET
        ========================================================================== */
     :root {
       --primary-gold: #f5b82e;
@@ -30,11 +30,13 @@
     }
 
     body {
-      font-family: var(--font-main);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       background-color: var(--bg-light);
       color: var(--text-dark);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
@@ -64,164 +66,222 @@
       background-color: var(--gold-hover);
     }
 
-    .btn-book-outline {
-      display: inline-block;
-      border: 1px solid var(--primary-gold);
-      color: var(--primary-gold);
-      padding: 10px 26px;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-    }
-
-    .btn-book-outline:hover {
-      background-color: var(--primary-gold);
-      color: #ffffff;
-    }
-
     /* ==========================================================================
-       HEADER & NAVIGATION
+       HEADER & NAVIGATION (MATCHING INDEX.HTML & STYLE.CSS)
        ========================================================================== */
     .navbar {
+      width: 100%;
+      background-color: #ffffff;
       position: sticky;
       top: 0;
-      background-color: var(--bg-light);
       z-index: 1000;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.05);
     }
 
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1380px;
+    .navbar-container {
+      max-width: 70%;
       margin: 0 auto;
-      padding: 46px 24px;
+      padding: 45px 40px; 
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: padding 0.3s ease;
     }
 
     .logo {
-      font-size: 22px;
+      font-size: 1.9rem;
       font-weight: 400;
-      letter-spacing: 9px;
-      color: var(--primary-gold);
+      color: #FDBB30;
       text-decoration: none;
       text-transform: uppercase;
+      letter-spacing: 0.25em;
+      z-index: 1002;
     }
 
-    /* Desktop Navigation */
-    .desktop-menu {
+    .nav-links {
       display: flex;
       align-items: center;
-      gap: 38px;
+      gap: 32px;
     }
 
-    /* Unfixed Hover Underline */
-    .desktop-menu a {
+    .nav-links a:not(.btn-book) {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #B6B6B6;
+      letter-spacing: 0.08em;
       position: relative;
+      padding-bottom: 4px;
       text-decoration: none;
-      color: var(--text-muted);
-      font-size: 14px;
-      letter-spacing: 1.5px;
-      font-weight: 400;
-      padding-bottom: 6px;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
     }
 
-    .desktop-menu a::after {
+    .nav-links a:not(.btn-book)::after {
       content: '';
       position: absolute;
-      width: 0;
-      height: 2.5px;
       bottom: 0;
       left: 0;
-      background-color: var(--primary-gold);
+      width: 0%;
+      height: 2px;
+      background-color: #FDBB30;
       transition: width 0.3s ease-in-out;
     }
 
-    .desktop-menu a:hover::after {
+    .nav-links a:not(.btn-book):hover::after,
+    .nav-links a.active::after {
       width: 100%;
     }
 
-    .desktop-menu a:hover {
-      color: var(--text-dark);
+    .nav-links a:not(.btn-book):hover {
+      color: black;
     }
 
-    .desktop-menu a.btn-book-outline::after {
+    .nav-links a.btn-book {
+      border: 1px solid #FDBB30;
+      background-color: #fff;
+      color: #B6B6B6;
+      padding: 10px 28px;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a.btn-book:hover {
+      background-color: #606060;
+      color: #ffffff;
+    }
+
+    /* Hidden checkbox element offscreen for menu toggle */
+    .nav-toggle {
       display: none;
     }
 
-    /* Mobile Menu Toggle Checkbox */
-    #menu-toggle {
+    .hamburger-menu {
       display: none;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 28px;
-      height: 22px;
-      background: transparent;
+      background: none;
       border: none;
       cursor: pointer;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 26px;
+      height: 18px;
+      padding: 0;
+      z-index: 1002;
+      position: relative;
     }
 
-    .hamburger .bar {
-      height: 2px;
+    .hamburger-menu span {
+      display: block;
       width: 100%;
-      background-color: var(--primary-gold);
-      border-radius: 2px;
+      height: 2px;
+      background-color: #FDBB30;
+      border-radius: 1px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
-    /* Mobile Overlay */
-    .mobile-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: var(--dark-footer);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+    /* Header Media Queries */
+    @media screen and (min-width: 992px) and (max-width: 1366px) {
+      .navbar-container {
+        padding: 60px 30px;
+        position: fixed;
+        top: 0;
+      }
     }
 
-    .close-btn {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      font-size: 42px;
-      color: #ffffff;
-      cursor: pointer;
-      line-height: 1;
+    @media (max-width: 991px) {
+      .hamburger-menu {
+        display: flex;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #3d3d3d;
+        gap: 32px;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      /* Trigger navigation menu display using checkbox state */
+      .nav-toggle:checked ~ .nav-links {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Trigger 'X' hamburger transforms using checkbox state */
+      .nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+      }
+
+      .nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+      }
+
+      .nav-links a:not(.btn-book) {
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: #ffffff;
+        letter-spacing: 4px;
+      }
+
+      .nav-links a:not(.btn-book)::after {
+        display: none;
+      }
+
+      .nav-links a.btn-book {
+        border: none;
+        background-color: #fdb813;
+        color: #2b2b2b;
+        padding: 14px 50px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 2px;
+        margin-top: 10px;
+      }
+
+      .navbar-container {
+        padding: 15px 25px;
+        max-width: 100%;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+      }
     }
 
-    .mobile-menu {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 28px;
-    }
+    @media (max-width: 767px) {
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
 
-    .mobile-menu a {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 22px;
-      letter-spacing: 3px;
-      font-weight: 300;
-      text-transform: uppercase;
-    }
+      .navbar-container {
+        padding: 20px 20px;
+        max-width: 100%;
+      }
 
-    #menu-toggle:checked ~ .mobile-overlay {
-      opacity: 1;
-      pointer-events: auto;
+      .logo {
+        font-size: 1.2rem;
+        letter-spacing: 0.2em;
+      }
     }
 
     /* ==========================================================================
@@ -245,7 +305,7 @@
     .section-title {
       font-size: 70px;
       font-weight: 300;
-      color: var(--primary-gold);
+      color: #FDBB30;
       margin-bottom: 30px;
       letter-spacing: 3.5px;
     }
@@ -278,11 +338,7 @@
       overflow: hidden;
     }
 
-    .room-image-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .room-image-container video,
     .room-image-container img {
       width: 100%;
       height: 100%;
@@ -319,7 +375,6 @@
       cursor: pointer;
     }
 
-    /* OVERLAY CARD STRUCTURE (Updated based on image) */
     .room-details {
       position: relative;
       width: 78%;
@@ -350,7 +405,6 @@
       max-width: 320px;
     }
 
-    /* Double Border Box for Room Size (Top & Bottom Lines) */
     .room-size-wrapper {
       position: relative;
       display: block;
@@ -375,7 +429,6 @@
       height: 100%;
     }
 
-    /* List Layout matching image */
     .amenities-list {
       list-style: none;
       padding: 0;
@@ -465,9 +518,7 @@
       color: var(--primary-gold);
     }
 
-    /* ==========================================================================
-       MEDIA QUERIES
-       ========================================================================== */
+    /* Page Media Queries */
     @media screen and (max-width: 1100px) {
       .room-details {
         width: 88%;
@@ -493,29 +544,6 @@
     }
 
     @media screen and (max-width: 768px) {
-      .desktop-menu {
-        display: none;
-      }
-      .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1380px;
-      margin: 0 auto;
-      padding: 25px 13px;
-      }
-      .logo {
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: 3px;
-      color: var(--primary-gold);
-      text-decoration: none;
-      text-transform: uppercase;
-    }
-      .hamburger {
-        display: flex;
-      }
-
       .hero-section {
         padding: 48px 0 24px;
       }
@@ -562,42 +590,28 @@
 </head>
 <body>
 
-  <!-- Menu toggle checkbox -->
-  <input type="checkbox" id="menu-toggle">
-
-  <!-- ================= HEADER ================= -->
+  <!-- ================= HEADER (MATCHING INDEX.HTML) ================= -->
   <header class="navbar">
-    <div class="nav-container">
+    <div class="navbar-container">
       <a href="#" class="logo">M A R I G O L D</a>
-      
-      <!-- Desktop Menu -->
-      <nav class="desktop-menu">
-        <a href="#rooms">Rooms</a>
-        <a href="#dining">Dining</a>
-        <a href="#wellness">Wellness</a>
-        <a href="#events">Events</a>
-        <a href="#contact">Contact</a>
-        <a href="#book" class="btn-book-outline">BOOK</a>
-      </nav>
 
-      <!-- Hamburger Trigger -->
-      <label for="menu-toggle" class="hamburger" aria-label="Toggle Navigation">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+      <!-- Hidden Checkbox for CSS-Only Toggle -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
+      <!-- Label acts as the Hamburger Button -->
+      <label for="nav-toggle" class="hamburger-menu" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
       </label>
-    </div>
 
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-overlay">
-      <label for="menu-toggle" class="close-btn">&times;</label>
-      <nav class="mobile-menu">
-        <a href="#rooms">ROOMS</a>
-        <a href="#dining">DINING</a>
-        <a href="#wellness">WELLNESS</a>
-        <a href="#events">EVENTS</a>
-        <a href="#contact">CONTACT</a>
-        <a href="#book" class="btn-gold-fill">BOOK</a>
+      <nav class="nav-links">
+        <a href="rooms.html" class="active">ROOMS</a>
+        <a href="dining.html">DINING</a>
+        <a href="wellness.html">WELLNESS</a>
+        <a href="events.html">EVENTS</a>
+        <a href="contact.html">CONTACT</a>
+        <a href="book.html" class="btn-book">BOOK</a>
       </nav>
     </div>
   </header>
@@ -745,9 +759,7 @@
       <!-- Marigold Suite -->
       <div class="room-card">
         <div class="room-image-container">
-            
-                <img source src="room 5.webp" >
-            
+          <img src="room 5.webp" alt="Marigold Suite">
           <span class="carousel-arrow prev">&lt;</span>
           <span class="carousel-arrow next">&gt;</span>
           <span class="fullscreen-icon">&#x26F6;</span>
