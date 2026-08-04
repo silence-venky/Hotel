@@ -171,6 +171,11 @@ h1, h2, h3, .logo, .footer-logo {
   color: #ffffff;
 }
 
+/* Hide checkbox element offscreen */
+.nav-toggle {
+  display: none;
+}
+
 .hamburger-menu {
   display: none;
   background: none;
@@ -192,19 +197,6 @@ h1, h2, h3, .logo, .footer-logo {
   background-color: #FDBB30;
   border-radius: 1px;
   transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Transforms hamburger icon to an 'X' icon when active */
-.hamburger-menu.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 6px);
-}
-
-.hamburger-menu.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger-menu.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -6px);
 }
 
 /* ==========================================
@@ -834,9 +826,23 @@ address {
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
-  .nav-links.active {
+  /* Trigger navigation menu display using checkbox state */
+  .nav-toggle:checked ~ .nav-links {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Trigger 'X' hamburger transforms using checkbox state */
+  .nav-toggle:checked ~ .hamburger-menu span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  .nav-toggle:checked ~ .hamburger-menu span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle:checked ~ .hamburger-menu span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
   }
 
   .nav-links a:not(.btn-book) {
@@ -1030,7 +1036,7 @@ address {
   }
 
   .navbar-container {
-    padding: 15px 20px;
+    padding: 20px 20px;
     max-width: 100%;
   }
 
