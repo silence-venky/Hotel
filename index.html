@@ -14,19 +14,25 @@
   <header class="navbar">
     <div class="navbar-container">
       <a href="#" class="logo">M A R I G O L D</a>
+
+      <!-- Hidden Checkbox for CSS-Only Toggle -->
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
+      <!-- Label acts as the Hamburger Button -->
+      <label for="nav-toggle" class="hamburger-menu" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
       <nav class="nav-links">
         <a href="rooms.html">ROOMS</a>
         <a href="dining.html">DINING</a>
         <a href="wellness.html">WELLNESS</a>
         <a href="events.html">EVENTS</a>
         <a href="contact.html">CONTACT</a>
-        <a href="book" class="btn-book">BOOK</a>
+        <a href="book.html" class="btn-book">BOOK</a>
       </nav>
-      <button class="hamburger-menu" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </header>
 
@@ -225,24 +231,6 @@
       <p>&copy; 2026 Marigold Hotels. All Rights Reserved</p>
     </div>
   </footer>
-
-  <!-- Hamburger Navigation Script -->
-  <script>
-    const hamburger = document.querySelector('.hamburger-menu');
-    const navLinks = document.querySelector('.nav-links');
-
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navLinks.classList.toggle('active');
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-      });
-    });
-  </script>
 
 </body>
 </html>
